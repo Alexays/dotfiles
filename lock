@@ -1,0 +1,20 @@
+#!/bin/bash
+tmpbg='/tmp/screen.png'
+scrot -z "$tmpbg"
+convert "$tmpbg" -scale 12.5% -scale 800% "$tmpbg"
+music=$(playerctl status)
+if [ "$music" = "Playing" ];then
+    playerctl pause
+fi
+amixer set Capture nocap > /dev/null
+light -O
+tlight=$(light)
+if (( $(echo $tlight'>'10 | bc -l) ));then
+    light -S 10
+fi
+i3lock -n -u -i "$tmpbg"
+light -I
+if [ "$music" = "Playing" ];then
+    playerctl play
+fi
+amixer set Capture cap > /dev/null
