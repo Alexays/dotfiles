@@ -1,0 +1,10 @@
+mr_clean
+git add --all
+git status
+if [ -z "$1" ];then
+	git commit -am "$(curl -s http://whatthecommit.com/index.txt)"
+else
+	git commit -am "$1"
+fi
+git push origin master
+cstat

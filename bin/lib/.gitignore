@@ -1,0 +1,10 @@
+cmake-build-debug
+CMakeLists.txt
+*~
+.\#*
+\#*\#
+*.o
+vgcore.*
+.idea
+*.o
+*.a

@@ -1,7 +1,10 @@
-#!/bin/bash
-tmpbg='/tmp/screen.png'
-scrot -z "$tmpbg"
-convert "$tmpbg" -scale 12.5% -scale 800% "$tmpbg"
+#!/bin/zsh
+TMP=/tmp/screen.png
+RES=$(xdpyinfo | grep dimensions | awk '{print $2}')
+FILTER='noise=alls=10,scale=iw/6:-1,scale=iw*6:-1:flags=neighbor'
+ffmpeg -y -loglevel 0 -s "$RES" -f x11grab -i $DISPLAY -vframes 1 \
+       -vf "$FILTER" "$TMP"
+i3lock -u -i "$TMP"
 music=$(playerctl status)
 if [ "$music" = "Playing" ];then
     playerctl pause
@@ -12,7 +15,6 @@ tlight=$(light)
 if (( $(echo $tlight'>'10 | bc -l) ));then
     light -S 10
 fi
-i3lock -n -u -i "$tmpbg"
 light -I
 if [ "$music" = "Playing" ];then
     playerctl play

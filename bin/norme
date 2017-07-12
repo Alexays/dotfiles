@@ -1,0 +1,30 @@
+#!/bin/bash
+/home/rouill_a/bin/normoulinette/normoulinette >& /tmp/moul1
+moulinette2.py . -nocheat >& /tmp/moul2
+
+NBR1=$(cat /tmp/moul1 | tail -1 | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" | grep -Eo '[0-9]{1,4}')
+NBR2=$(wc -l < /tmp/moul2)
+NBRT=$(echo $NBR1+$NBR2 | bc)
+if [ "$NBR1" -gt "0" ]
+then
+    echo "======================================"
+    echo "| Les fautes obtenu par la moumou 1. |"
+    echo "======================================"
+    cat /tmp/moul1 | grep -v "Lecture de " | grep -v "Vous avez"
+    rm -rf /tmp/moul1
+fi
+if [ "$NBR2" -gt "0" ]
+then
+    echo "======================================"
+    echo "| Les fautes obtenu par la moumou 2. |"
+    echo "======================================"
+    cat /tmp/moul2 | sed -e "s/Erreur dans .\/\//`echo -e "\e[31m\e[1m["`/; s/:/] `echo -e "\e[39m"`/;s/ a la ligne /:/; s/.....$//; s/\/\//\//g"
+    rm -rf /tmp/moul2
+    echo -e "\e[21m"
+fi
+if [ "$NBRT" == "0" ]
+then
+    echo -e "\e[32mAucune faute de norme bien Ouej !\e[39m"
+else
+    echo -e "\e[31m\e[1mVous avez fait des fautes de norme !\e[39m"
+fi

@@ -1,0 +1,32 @@
+if [ -z "$1" ]
+then
+	echo "Usage: REPO_NAME BINARY_NAME"
+	exit
+fi
+prep_repo $1
+if [ -z "$2"]
+then
+	binr=$(echo "$1" | sed 's/^.*_\([^_]*\)$/\1/')
+else
+	binr="$2"
+fi
+clone_rep "$1" alexis.rouillard
+if [[ "$1" == *"CPE"* ]]
+then
+	dir=/home/rouill_a/Tek1/CPE/
+elif [[ "$1" == *"PSU"* ]]
+then
+	dir=/home/rouill_a/Tek1/PSU/
+else
+	dir=/home/rouill_a/Tek1/
+fi
+mv "$1" "$dir"
+cd "$dir""$1"
+if [ -z "$3"]
+then
+	cp -avf ~/bin/lib/* ./
+	sed -i "s/a.out/$binr/g" Makefile
+fi
+git config user.name "Alexis Rouillard"
+git config user.email "alexis.rouillard@epitech.eu"
+echo "Finish !"

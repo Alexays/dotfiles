@@ -18,11 +18,12 @@
 (setq size-indication-mode t)
 ;; parenthese en couleur
 (custom-set-variables
+ '(package-selected-packages
+   (quote
+    (web-mode whitespace-cleanup-mode auto-package-update smartparens flycheck)))
  '(show-paren-mode t))
-(custom-set-faces)
-;; auto completation
-(icomplete-mode 1)
-(setq completion-ignore-case t)
+(custom-set-faces
+ )
 ;; make characters after column 80 purple
 (setq whitespace-style
   (quote (face trailing lines-tail)))
@@ -41,15 +42,18 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (load "std.el")
 (load "std_comment.el")
-(add-to-list 'load-path "~/.emacs.d/lisp")
 ;; ----------------------------------
 ;;       INDENTATION & OTHER
 ;; ----------------------------------
-(require 'indent-guide)
-(indent-guide-global-mode)
-(require 'whitespace)
-(require 'autopair)
-(autopair-global-mode)
 (require 'auto-complete-config)
+(require 'package)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/lisp/ac-dict")
 (ac-config-default)
+(add-to-list 'package-archives
+             '("MELPA Stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
+(global-flycheck-mode)
+(smartparens-global-mode t)
+(defun my-c-mode-common-hook ()
+  (setq flycheck-clang-include-path (list "include" "../include" "../../include" "../../../include")))
+(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
