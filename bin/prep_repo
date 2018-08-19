@@ -1,4 +1,0 @@
-#!/bin/bash
-blih -u alexis.rouillard@epitech.eu repository create $1
-blih -u alexis.rouillard@epitech.eu repository setacl $1 ramassage-tek r
-#blih -u alexis.rouillard@epitech.eu repository getacl $1

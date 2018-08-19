@@ -1,1 +1,0 @@
-find . -name "#*#" -delete -print -o -name "vgcore.*" -delete -print -o -name "*~" -delete -print -o -name "._*" -delete -print

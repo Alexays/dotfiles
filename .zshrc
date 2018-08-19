@@ -1,55 +1,33 @@
 alias ls='ls --color=auto'
 alias sl='ls'
-alias yolo='pacaur -Syua'
-alias yolor='/home/rouill_a/bin/.yolor'
-alias emacs='emacs -nw'
-alias ne='emacs'
-alias push_repo='git up && push_repo'
-alias log='git log --pretty=full --stat --graph --decorate=full'
-alias chromium='chromium --process-per-site'
+alias yolo='yay -Syu --devel --timeupdate --combinedupgrade'
+alias yolor='$HOME/.bin/yolor'
+alias docktest='docker run -v /home/alex:/home/alex -i -t d4a7f5a2dd50 /bin/zsh'
+alias maek='make'
+alias gdba='git branch --no-color --merged | command grep -vE "^(\*|\s*(master|develop|dev)\s*$)" | command xargs -n 1 git branch -d'
 
 export TERM=xterm-256color
 
-export PATH=/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/rouill_a/bin:/opt/android-ndk
+export PATH=/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/alex/.bin:/home/alex/.bin/flutter/bin:/opt/android-ndk
 export ANDROID_HOME=/opt/android-sdk
 export ANDROID_NDK=/opt/android-ndk
-
-### C Graphical Programming Environement Variable
-export LIBRARY_PATH=$LIBRARY_PATH:/home/rouill_a/.graph_programming/lib
-export LD_LIBRARY_PATH=$LIBRARY_PATH:/home/rouill_a/.graph_programming/lib
-export CPATH=$CPATH:/home/rouill_a/.graph_programming/include
+export SDKMANAGER_OPTS="--add-modules java.se.ee"
 
 export GEOMETRY_SYMBOL_PROMPT="❯"
 export GEOMETRY_SYMBOL_EXIT_VALUE="❯"
 
-export PATH="$HOME/.cargo/bin:$PATH"
+source /usr/share/zsh/share/antigen.zsh
 
-# load zgen
-source $HOME/.zgen/zgen.zsh
-
-# if the init scipt doesn't exist
-if ! zgen saved; then
-
-    zgen prezto prompt theme 'eayo'
-
-    zgen prezto
-    zgen prezto git
-    zgen prezto command-not-found
-    zgen prezto syntax-highlighting
-    zgen prezto history-substring-search
-    zgen prezto autosuggestions
-    zgen prezto completion
-
-    # plugins
-    zgen load bhilburn/powerlevel9k
-    zgen load zsh-users/zsh-syntax-highlighting
-
-    # completion
-    #zgen load zsh-users/zsh-completions src
-
-    #theme
-    #zgen load frmendes/geometry geometry
-
-    # generate the init script from plugins above
-    zgen save
-fi
+antigen use oh-my-zsh
+antigen bundle git
+antigen bundle pip
+antigen bundle lein
+antigen bundle command-not-found
+antigen bundle djui/alias-tips
+antigen bundle zsh-users/zsh-history-substring-search
+antigen bundle zsh-users/zsh-completions
+antigen bundle zdharma/fast-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zpm-zsh/autoenv
+antigen theme geometry-zsh/geometry
+antigen apply

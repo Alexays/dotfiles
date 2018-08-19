@@ -1,9 +1,0 @@
-if [ -d ".git" ]; then
-norme=$(norme)
-echo "$norme" | tail -n1
-line=$(find . -name "*.c" -type f -print0 -o -name "*.js" -type f -print0 | xargs -0 cat | wc -l)
-echo "$line lignes de code dans le projet."
-else
-dir=$(basename "$PWD")
-echo "'$dir' n'est pas un dossier projet."
-fi
