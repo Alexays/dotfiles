@@ -3,7 +3,7 @@ set $mod Mod4
 
 ### Output configuration
 font pango:Roboto 12
-output * bg `$HOME/.config/sway/background` fill dpms on
+output * bg `~/.config/sway/background` fill dpms on
 default_border pixel 5
 smart_gaps on
 gaps 5
@@ -42,9 +42,9 @@ bindsym XF86MonBrightnessUp exec light -A 2
 bindsym XF86MonBrightnessDown exec light -U 2
 
 # Audio
-bindsym XF86AudioRaiseVolume exec --no-startup-id  amixer sset Master 5%+ unmute
-bindsym XF86AudioLowerVolume exec --no-startup-id amixer sset Master 5%- unmute
-bindsym XF86AudioMute exec --no-startup-id $HOME/.bin/mute
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 bindsym $mod+Control+Left exec --no-startup-id playerctl previous
 bindsym $mod+Control+Right exec --no-startup-id playerctl next
 bindsym $mod+Control+Up exec --no-startup-id playerctl play-pause
@@ -191,10 +191,10 @@ bindsym $mod+r mode "resize"
 for_window [class="Chromium"] move window to workspace 2
 for_window [class="Code"] move window to workspace 3
 for_window [class="Spotify"] move window to workspace 4
-for_window [class="Polybar"] border pixel 0, floating enable, sticky enable, resize set 1920 1, move position 0 0
 
 exec swayidle timeout 350 "swaylock -c 000000f0" before-sleep "swaylock -c 000000f0"
-exec_always $HOME/.bin/waybar.sh
+exec_always $HOME/.config/waybar/waybar.sh
 exec redshift -m wayland -l 47.218262:-1.557180
+exec $HOME/Bin/mako/build/mako
 
 include /etc/sway/config.d/*
